@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вживання апострофа з Песиком Барбосиком</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0FB;
+    --bg2:#DCD0F5;
+    --card:#FFFFFF;
+    --lav:#FDEEE0;
+    --ink:#392C52;
+    --ink-soft:#8779A0;
+    --coral:#7C5CD6;
+    --coral-d:#5C3FB0;
+    --teal:#45BE8B;
+    --teal-d:#2F9268;
+    --gold:#FFCF5C;
+    --gold-d:#E0A82E;
+    --correct-bg:#E1F5E6;
+    --correct-ink:#2E8B4F;
+    --wrong-bg:#FCE3DC;
+    --wrong-ink:#C15A3C;
+    --shadow:0 18px 34px -18px rgba(57,44,82,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 10% 6%, #E7DEFB 0%, transparent 45%),
+      radial-gradient(circle at 92% 88%, #FCE6D2 0%, transparent 42%),
+      var(--bg);
+    min-height:100vh;
+    font-family:'Quicksand', sans-serif;
+    color:var(--ink);
+    padding:22px 14px 50px;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:640px; margin:0 auto;}
+
+  .float-deco{
+    position:fixed;
+    font-size:30px;
+    opacity:.55;
+    animation:drift linear infinite;
+    pointer-events:none;
+    z-index:0;
+  }
+  .float-deco.d1{top:5%; left:-10%; animation-duration:32s; font-size:34px;}
+  .float-deco.d2{top:72%; left:-15%; animation-duration:46s; animation-delay:-16s; font-size:24px;}
+  .float-deco.d3{top:40%; left:-12%; animation-duration:54s; animation-delay:-28s; font-size:22px;}
+  .float-deco.d4{top:18%; left:-14%; animation-duration:40s; animation-delay:-8s; font-size:20px;}
+  @keyframes drift{ from{transform:translateX(0);} to{transform:translateX(120vw);} }
+  @media (prefers-reduced-motion: reduce){ .float-deco{display:none;} }
+
+  .brand{ text-align:center; margin-bottom:14px; position:relative; z-index:1; }
+  .brand .eyebrow{
+    font-weight:700; font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--coral-d);
+  }
+  .brand h1{
+    font-family:'Baloo 2', sans-serif; font-weight:800;
+    font-size:clamp(22px,6.6vw,30px); margin:2px 0 0; color:var(--ink);
+  }
+
+  .stones{
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    margin:16px auto 20px; max-width:560px; position:relative; z-index:1;
+  }
+  .stone-wrap{display:flex; align-items:center; flex:1;}
+  .stone{
+    width:30px; height:30px; border-radius:50%; background:#fff;
+    border:2.5px solid #F7DFB9; display:flex; align-items:center; justify-content:center;
+    font-size:13px; flex:0 0 auto; transition:all .25s cubic-bezier(.34,1.56,.64,1); position:relative;
+  }
+  .stone.done{ background:var(--gold); border-color:var(--gold-d); color:var(--ink);}
+  .stone.now{
+    background:var(--coral); border-color:var(--coral-d); transform:scale(1.2);
+    box-shadow:0 8px 16px -6px rgba(124,92,214,0.6);
+  }
+  .stone .owl-mark{ position:absolute; top:-25px; font-size:18px; animation:bob 1.4s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+  .stone-line{ flex:1; height:3px; background:#F7DFB9; border-radius:3px; }
+  .stone-line.done{ background:var(--gold); }
+
+  .stage{
+    background:var(--card); border-radius:32px; padding:28px 22px 24px;
+    box-shadow:var(--shadow); position:relative; z-index:1; min-height:260px;
+  }
+
+  .mascot-row{ display:flex; align-items:flex-end; gap:12px; margin-bottom:18px; }
+  .owl{ width:60px; height:60px; flex:0 0 auto; }
+  .bubble{
+    background:var(--lav); border-radius:20px 20px 20px 4px; padding:12px 16px;
+    font-family:'Baloo 2',sans-serif; font-weight:600; font-size:15.5px; line-height:1.35;
+    color:var(--ink); flex:1;
+  }
+
+  h2.stage-title{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:21px; margin:0 0 4px; }
+  p.stage-sub{ color:var(--ink-soft); font-weight:600; font-size:13.5px; margin:0 0 18px; }
+
+  .name-field{
+    width:100%; padding:15px 16px; border-radius:18px; border:2.5px solid var(--lav);
+    background:#FBF9F0; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    color:var(--ink); outline:none; margin-bottom:16px; text-align:center;
+  }
+  .name-field:focus{ border-color:var(--coral); }
+  textarea.name-field{ text-align:left; font-family:'Quicksand',sans-serif; font-weight:600; font-size:16px; min-height:70px; resize:vertical;}
+
+  .letters-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-bottom:6px; }
+  .letter-card{
+    aspect-ratio:1; border-radius:20px; border:none; cursor:pointer; background:var(--bg2);
+    display:flex; align-items:center; justify-content:center; position:relative; perspective:600px; padding:0;
+  }
+  .letter-card .face{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border-radius:20px; backface-visibility:hidden; transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .letter-card .front{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:34px; color:var(--coral-d); background:var(--bg2); }
+  .letter-card .back{
+    background:var(--teal); color:#fff; transform:rotateY(180deg); font-family:'Quicksand',sans-serif;
+    font-weight:700; font-size:12px; gap:2px; padding:4px; text-align:center;
+  }
+  .letter-card .back .emo{ font-size:24px; margin-bottom:2px; }
+  .letter-card.flipped .front{ transform:rotateY(180deg); }
+  .letter-card.flipped .back{ transform:rotateY(360deg); }
+  .letter-card .spark{
+    position:absolute; top:-6px; right:-6px; font-size:15px; opacity:0;
+    transition:opacity .2s ease, transform .3s cubic-bezier(.34,1.56,.64,1); transform:scale(.4) rotate(-20deg);
+  }
+  .letter-card.flipped .spark{ opacity:1; transform:scale(1) rotate(0deg); }
+  .seen-counter{ text-align:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; }
+
+  .round-tag{ text-align:center; font-weight:700; color:var(--ink-soft); font-size:12.5px; margin-bottom:2px; }
+  .pair-card{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    background:var(--bg2); border-radius:20px; padding:18px; margin:8px 0 20px; font-size:15px; font-weight:700;
+  }
+  .pair-card .item{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .pair-card .item .emo{ font-size:38px; }
+  .pair-card .vs{ font-size:13px; color:var(--ink-soft); }
+
+  .prompt-letter{
+    text-align:center; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:56px; color:var(--coral-d);
+    background:var(--bg2); width:110px; height:110px; border-radius:26px; display:flex; align-items:center; justify-content:center;
+    margin:4px auto 20px; box-shadow:0 12px 20px -12px rgba(124,92,214,.5);
+  }
+  .prompt-word{
+    text-align:center; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:30px; color:var(--coral-d);
+    background:var(--bg2); border-radius:20px; padding:16px; margin:4px 0 20px;
+  }
+  .prompt-hint{ text-align:center; font-size:13px; color:var(--ink-soft); font-weight:700; margin:-14px 0 16px;}
+
+  .circle-wrap{
+    position:relative; width:160px; height:160px; margin:4px auto 20px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .circle-outer{
+    position:absolute; inset:0; border-radius:50%; border:3px dashed var(--coral);
+    background:var(--bg2);
+  }
+  .circle-inner{
+    position:relative; width:92px; height:92px; border-radius:50%; background:var(--coral);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px;
+    box-shadow:0 10px 18px -8px rgba(124,92,214,.6);
+  }
+
+  .choices{ display:flex; flex-direction:column; gap:10px; }
+  .choices.grid3{ display:grid; grid-template-columns:repeat(3,1fr); }
+  .choice{
+    border-radius:16px; border:none; background:var(--lav); font-size:16px; font-weight:700;
+    font-family:'Quicksand',sans-serif; color:var(--ink); cursor:pointer; padding:14px 10px;
+    transition:transform .15s ease, background .15s ease; display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .choices.grid3 .choice{ aspect-ratio:1; font-size:32px; padding:0; }
+  .choice:active{ transform:scale(.96); }
+  .choice.correct{ background:var(--correct-bg); color:var(--correct-ink); }
+  .choice.wrong{ background:var(--wrong-bg); color:var(--wrong-ink); }
+  .choice[disabled]{ cursor:default; }
+
+  .scheme-shape{ font-family:monospace; font-size:22px; letter-spacing:5px; font-weight:700; }
+
+  /* ---------- compact legend shown during practice ---------- */
+  .legend-row{
+    display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:0 0 18px;
+  }
+  .legend-item{
+    display:flex; align-items:center; gap:7px; background:var(--bg2); border-radius:14px;
+    padding:8px 12px; font-weight:700; font-size:12.5px; color:var(--ink);
+  }
+  .legend-ico{
+    font-family:monospace; font-weight:800; font-size:18px; color:var(--coral-d);
+    min-width:22px; text-align:center;
+  }
+
+  /* ---------- big legend for the dedicated theory stage ---------- */
+  .big-legend{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:0 0 20px; }
+  .big-legend-item{
+    display:flex; flex-direction:column; align-items:center; gap:6px; background:var(--bg2);
+    border-radius:20px; padding:16px 18px; min-width:96px;
+  }
+  .big-ico{ font-family:monospace; font-weight:800; font-size:32px; color:var(--coral-d); line-height:1; }
+  .big-legend-item span:last-child{ font-family:'Quicksand',sans-serif; font-weight:700; font-size:12px; color:var(--ink); text-align:center; }
+
+  /* ---------- softening letters chips + example cards ---------- */
+  .soften-chips{ display:flex; justify-content:center; gap:10px; margin:0 0 20px; flex-wrap:wrap; }
+  .soften-chip{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px; color:#fff;
+    background:linear-gradient(155deg,#6DD3A8,var(--teal)); border-radius:14px; width:44px; height:44px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .soften-card{
+    background:var(--bg2); border-radius:18px; padding:14px 18px; margin-bottom:9px; cursor:pointer;
+    transition:background .15s ease;
+  }
+  .soften-card .w{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:23px; }
+  .hl{ color:#fff; background:var(--coral); border-radius:8px; padding:0 7px; }
+  .soften-card .note{ display:none; margin-top:8px; font-weight:700; font-size:13px; color:var(--ink-soft); }
+  .soften-card.open{ background:var(--lav); }
+  .soften-card.open .note{ display:block; }
+
+  /* ---------- letter-by-letter scheme builder ---------- */
+  .build-word-row{ display:flex; justify-content:center; gap:8px; margin:4px 0 8px; flex-wrap:wrap; }
+  .build-letter-col{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .build-letter{
+    width:52px; height:52px; border-radius:16px; border:2.5px solid var(--bg2); background:#fff;
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:22px; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s ease;
+  }
+  .build-letter.active{ border-color:var(--coral); box-shadow:0 0 0 3px rgba(124,92,214,.2); }
+  .build-slot{
+    width:52px; height:30px; border-radius:10px; background:var(--bg2);
+    display:flex; align-items:center; justify-content:center; font-family:monospace; font-weight:800; font-size:18px; color:var(--ink-soft);
+  }
+  .build-slot.filled{ background:var(--lav); color:var(--ink); }
+  .build-letter.right{ border-color:var(--correct-ink); background:var(--correct-bg); }
+  .build-letter.wrong-mark{ border-color:var(--wrong-ink); background:var(--wrong-bg); }
+  .symbol-palette{ display:flex; justify-content:center; gap:10px; margin:16px 0 6px; }
+  .symbol-btn{
+    display:flex; flex-direction:column; align-items:center; gap:3px; border:none; cursor:pointer;
+    background:var(--lav); border-radius:16px; padding:10px 14px; font-family:'Quicksand',sans-serif; font-weight:700; font-size:11px; color:var(--ink);
+  }
+  .symbol-btn .sym{ font-family:monospace; font-weight:800; font-size:22px; color:var(--coral-d); }
+  .symbol-btn.selected{ background:var(--coral); color:#fff; }
+  .symbol-btn.selected .sym{ color:#fff; }
+
+  /* ---------- highlighted letter in a word ---------- */
+  .focus-word{
+    text-align:center; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:44px; color:var(--ink);
+    background:var(--bg2); border-radius:22px; padding:18px; margin:4px 0 20px;
+  }
+
+  .sentence-card{ background:var(--bg2); border-radius:22px; padding:24px 18px; text-align:center; margin-bottom:20px; }
+  .sentence-card .words{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(19px,6vw,25px); line-height:1.55; }
+  .sentence-card .words span{
+    display:inline-block; margin:0 4px; padding:2px 7px; border-radius:10px; cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .sentence-card .words span:nth-child(odd){ color:var(--coral-d); }
+  .sentence-card .words span:nth-child(even){ color:var(--teal-d); }
+  .sentence-card .words span.tapped{ background:#fff; transform:translateY(-2px) scale(1.05); }
+  .sentence-card .words span.correct{ background:var(--correct-bg); color:var(--correct-ink); box-shadow:0 0 0 2px var(--correct-ink) inset; }
+  .sentence-card .words span.wrong{ background:var(--wrong-bg); color:var(--wrong-ink); box-shadow:0 0 0 2px var(--wrong-ink) inset; }
+  .sentence-card .author{ display:block; margin-top:10px; font-family:'Quicksand',sans-serif; font-weight:700; font-size:13px; color:var(--ink-soft); }
+  .read-hint{ font-size:12px; font-weight:600; color:var(--ink-soft); margin-top:8px; }
+
+  .q-block{ margin-top:4px; }
+  .q-text{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; margin:0 0 12px; text-align:center; }
+  .q-opts{ display:flex; gap:9px; flex-wrap:wrap; justify-content:center; }
+  .q-opt{
+    padding:13px 16px; border-radius:16px; border:none; background:var(--lav);
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:14.5px; color:var(--ink);
+    cursor:pointer; display:flex; align-items:center; gap:7px;
+  }
+  .q-opt .e{ font-size:19px; }
+  .q-opt.correct{ background:var(--correct-bg); color:var(--correct-ink); }
+  .q-opt.wrong{ background:var(--wrong-bg); color:var(--wrong-ink); }
+  .q-opt[disabled]{ cursor:default; }
+
+  .reveal-btn{
+    display:block; margin:14px auto 0; border:none; background:var(--gold); color:var(--ink);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13.5px; padding:10px 18px; border-radius:999px; cursor:pointer;
+  }
+  .reveal-box{
+    display:none; background:var(--bg2); border-radius:16px; padding:14px 16px; margin-top:12px;
+    font-weight:700; font-size:14.5px; text-align:center; line-height:1.6;
+  }
+  .reveal-box.open{ display:block; }
+
+  .fb-line{ text-align:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px; min-height:20px; margin-top:12px; }
+  .fb-line.ok{ color:var(--correct-ink); }
+  .fb-line.bad{ color:var(--wrong-ink); }
+
+  .exercise-box{ text-align:center; background:var(--bg2); border-radius:22px; padding:24px 18px; }
+  .exercise-box .big-emo{ font-size:46px; display:block; margin-bottom:10px; }
+  .exercise-box p{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; margin:0; }
+  .exercise-dots{ display:flex; gap:6px; justify-content:center; margin-top:14px; }
+  .exercise-dots span{ width:8px; height:8px; border-radius:50%; background:#CDB067; }
+  .exercise-dots span.on{ background:var(--coral); }
+
+  .nav-row{ display:flex; justify-content:center; margin-top:22px; }
+  .btn{
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15.5px; padding:13px 28px; border-radius:999px;
+    border:none; cursor:pointer; background:linear-gradient(155deg,#EB7A63,var(--coral)); color:#fff;
+    box-shadow:0 12px 22px -10px rgba(124,92,214,.55); display:flex; align-items:center; gap:6px;
+  }
+  .btn:disabled{ opacity:.35; cursor:default; box-shadow:none; }
+  .btn.teal{ background:linear-gradient(155deg,#6DD3A8,var(--teal)); box-shadow:0 12px 22px -10px rgba(47,146,104,.55); }
+
+  .final{ text-align:center; }
+  .final .badge{
+    width:120px; height:120px; margin:4px auto 14px; border-radius:50%;
+    background:linear-gradient(155deg,var(--gold),#FFD27A); display:flex; align-items:center; justify-content:center;
+    font-size:52px; box-shadow:0 18px 30px -12px rgba(224,168,46,.55);
+  }
+  .final h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:24px; margin:0 0 6px; }
+  .stars-row{ font-size:24px; letter-spacing:4px; margin:6px 0 16px; }
+  .homework-box{
+    background:var(--lav); border-radius:18px; padding:16px 18px; text-align:left; margin:14px 0;
+    font-weight:600; font-size:14.5px; line-height:1.7;
+  }
+  .homework-box b{ font-family:'Baloo 2',sans-serif; }
+  .zoo-row{ font-size:26px; letter-spacing:6px; margin:10px 0; }
+
+  footer{ text-align:center; margin-top:18px; font-size:11.5px; color:var(--ink-soft); font-weight:600; position:relative; z-index:1; }
+
+  #confettiLayer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti-piece{ position:absolute; top:-24px; font-size:19px; animation:fall linear forwards; }
+  @keyframes fall{ to{ transform:translateY(108vh) rotate(340deg); opacity:.9; } }
+
+  /* ---------- free navigation bar ---------- */
+  body{ padding-bottom:96px; }
+  .switch-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(244,240,251,.92);
+    backdrop-filter:blur(6px);
+    box-shadow:0 -10px 24px -14px rgba(46,42,28,.4);
+  }
+  .switch-btn{
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px;
+    border:none; border-radius:999px; padding:11px 16px; cursor:pointer;
+    background:#fff; color:var(--ink); box-shadow:0 4px 10px -4px rgba(46,42,28,.3);
+  }
+  .switch-btn.arrow{ padding:11px 14px; }
+  .switch-btn:disabled{ opacity:.35; cursor:default; }
+  .switch-btn.menu{ background:var(--coral); color:#fff; flex:1; max-width:220px; }
+  .switch-label{ font-size:11.5px; font-weight:700; color:var(--ink-soft); text-align:center; flex:0 0 auto; display:none; }
+  @media (min-width:480px){ .switch-label{ display:block; } }
+
+  .menu-overlay{
+    position:fixed; inset:0; z-index:60; background:rgba(46,42,28,.55);
+    display:none; align-items:center; justify-content:center; padding:16px;
+  }
+  .menu-overlay.open{ display:flex; }
+  .menu-card{
+    background:#fff; border-radius:26px; padding:20px 18px; max-width:420px; width:100%;
+    max-height:78vh; overflow-y:auto; box-shadow:var(--shadow);
+  }
+  .menu-card h3{ font-family:'Baloo 2',sans-serif; font-weight:800; margin:2px 0 12px; text-align:center; }
+  .menu-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px; }
+  .menu-list li{
+    display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:14px;
+    background:var(--bg2); cursor:pointer; font-weight:700; font-size:14.5px;
+  }
+  .menu-list li:hover{ background:var(--lav); }
+  .menu-list li.current{ background:var(--coral); color:#fff; }
+  .menu-list li .num{ font-family:'Baloo 2',sans-serif; font-size:16px; }
+  .menu-close{
+    display:block; margin:14px auto 0; border:none; background:var(--lav); color:var(--ink);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px; padding:10px 22px; border-radius:999px; cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="float-deco d1">💫</div>
+<div class="float-deco d2">🦴</div>
+<div class="float-deco d3">🐾</div>
+<div class="float-deco d4">✨</div>
+
+<div class="wrap">
+  <div class="brand">
+    <div class="eyebrow">Урок мови · 2 клас</div>
+    <h1>Вживання апострофа з Песиком Барбосиком 🐶</h1>
+  </div>
+
+  <div class="stones" id="stones"></div>
+  <div class="stage" id="stage"></div>
+  <footer>Урок триває приблизно 45–60 хвилин · разом із учителем</footer>
+</div>
+
+<div class="switch-bar">
+  <button class="switch-btn arrow" id="prevTaskBtn">⟵</button>
+  <button class="switch-btn menu" id="menuBtn">☰ Усі завдання</button>
+  <button class="switch-btn arrow" id="nextTaskBtn">⟶</button>
+</div>
+
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-card">
+    <h3>Обери завдання</h3>
+    <ul class="menu-list" id="menuList"></ul>
+    <button class="menu-close" id="menuCloseBtn">Закрити</button>
+  </div>
+</div>
+
+<div id="confettiLayer"></div>
+
+<script>
+/* ============================================================
+   ДАНІ УРОКУ
+   ============================================================ */
+/* Галерея: та сама буква я/ю/є/ї означає то ОДИН звук, то ДВА звуки —
+   залежно від того, чи стоїть перед нею апостроф. */
+const APOSTROPHE_PAIRS = [
+  {l:"Б + Ю", type:"апостроф! ю = [й][у], два звуки", emo:"💧", word:"Б'ЮТЬ"},
+  {l:"П + Є", type:"апостроф! є = [й][е], два звуки", emo:"🥤", word:"П'Є"},
+  {l:"В + Я", type:"апостроф! я = [й][а], два звуки", emo:"🌳", word:"В'ЯЗ"},
+  {l:"М + Я", type:"апостроф! я = [й][а], два звуки", emo:"🌿", word:"М'ЯТА"},
+  {l:"Р + Я", type:"апостроф! я = [й][а], два звуки", emo:"🪶", word:"ПІР'Я"},
+  {l:"Р + Ї", type:"апостроф! ї = [й][і], два звуки", emo:"🐦", word:"СОЛОВ'Ї"}
+];
+
+/* Гра: у якому слові з пари буква я/ю позначає ДВА звуки (стоїть апостроф)? */
+const WORD_PAIR_ROUNDS = [
+  {w1:"цвях", e1:"🔩", w2:"в'яз", e2:"🌳", correct:"в'яз"},
+  {w1:"пір'я", e1:"🪶", w2:"зоря", e2:"⭐️", correct:"пір'я"},
+  {w1:"бюро", e1:"🗄️", w2:"б'ють", e2:"💧", correct:"б'ють"},
+  {w1:"бур'ян", e1:"🌾", w2:"буряк", e2:"🥕", correct:"бур'ян"}
+];
+
+const THEORY_QUIZ_3 = {q:"Скільки звуків позначає буква я у слові б'ють?", correctText:"Два: [й] і [а]", wrongText:"Один: [а]"};
+
+/* Гра словотворення: утвори слово з апострофом від поданого */
+const WORD_FORM_ROUNDS = [
+  {base:"хлопець", correct:"хлоп'я", opts:["хлоп'я","хлопя","хлопчик"]},
+  {base:"голуб", correct:"голуб'я", opts:["голуб'я","голубя","голубка"]},
+  {base:"ластівка", correct:"ластів'я", opts:["ластів'я","ластівя","ластівочка"]},
+  {base:"солома", correct:"солом'яний", opts:["солом'яний","соломяний","соломовий"]},
+  {base:"трава", correct:"трав'яний", opts:["трав'яний","травяний","трав'янистий"]},
+  {base:"дерево", correct:"дерев'яний", opts:["дерев'яний","деревяний","деревистий"]}
+];
+
+/* Доповни речення словом з апострофом */
+const FILL_ROUNDS = [
+  {sentence:"Пташку від холоду захищає ___.", correct:"пір'я", opts:["пір'я","перо","пух"]},
+  {sentence:"Пишні квіти в букеті відцвіли і ___.", correct:"в'януть", opts:["в'януть","вянуть","засихають"]},
+  {sentence:"Навесні пташки ___ гнізда.", correct:"в'ють", opts:["в'ють","вьють","будують"]}
+];
+
+/* Чарівні кола: яке слово справді існує з цим центральним складом? */
+const MAGIC_ROUNDS = [
+  {center:"М'Я", correct:"СОЛОМ'ЯНИЙ", opts:["СОЛОМ'ЯНИЙ","СОКОМ'ЯНИЙ","РУСОМ'ЯНИЙ"]},
+  {center:"В'Я", correct:"ЗДОРОВ'Я", opts:["ЗДОРОВ'Я","ДЕРЕСВ'Я","ТРАСОВ'Я"]},
+  {center:"Р'Я", correct:"БУР'ЯН", opts:["БУР'ЯН","БУСОР'ЯН","НАР'ЯБУН"]}
+];
+
+/* Перенос слів: апостроф не можна відокремлювати від попередньої літери */
+const TRANSFER_QUIZ = [
+  {q:"Як правильно перенести слово пір'їна?", opts:[{t:"пір'-їна",ok:true},{t:"пір-'їна",ok:false}]},
+  {q:"Як правильно перенести слово Мар'яна?", opts:[{t:"Мар-'яна",ok:false},{t:"Мар'-яна",ok:true}]}
+];
+
+const PROVERB_ROUNDS = [
+  {
+    text:"Добре ім'я — найкраще багатство.",
+    q:"Про що йдеться в цьому прислів'ї?",
+    opts:[
+      {t:"Найцінніше — це чесне ім'я та добра слава", e:"🌟", ok:true},
+      {t:"Найважливіше — мати багато грошей", e:"💰", ok:false},
+      {t:"Ім'я треба вигадувати гарне", e:"✏️", ok:false}
+    ]
+  },
+  {
+    text:"Без гілок — не дерево, без дітей — не сім'я.",
+    q:"Що означає це прислів'я?",
+    opts:[
+      {t:"Сім'я з дітьми — як дерево з гілками, повна й жива", e:"🌳", ok:true},
+      {t:"Дерева не ростуть без гілок", e:"🪵", ok:false},
+      {t:"Діти люблять лазити по деревах", e:"🧗", ok:false}
+    ]
+  }
+];
+
+const POEM1 = {
+  text:"Грицю, Грицю, до роботи! В Гриця порвані чоботи. Грицю, Грицю, до телят! В Гриця ніженьки болять.",
+  author:"з народного",
+  q:"Чому Гриць не хоче йти до роботи?",
+  opts:[
+    {t:"У нього порвані чоботи й болять ноги", e:"👞", ok:true},
+    {t:"Він хоче спати цілий день", e:"😴", ok:false},
+    {t:"Він боїться телят", e:"🐄", ok:false}
+  ],
+  reveal:"М'які приголосні тут позначені буквами <b>ю, я</b>: Гриц<b>ю</b>, Гриц<b>я</b>, тел<b>я</b>т, бол<b>я</b>ть."
+};
+
+const POEM2 = {
+  text:"Сім'я вечеря коло хати, вечірня зіронька встає. Дочка вечерять подає, а мати хоче научати, так соловейко не дає.",
+  author:"Тарас Шевченко",
+  q:"Чому мати не встигає повчати дочку?",
+  opts:[
+    {t:"Бо їй заважає спів соловейка", e:"🐦", ok:true},
+    {t:"Бо задзвонив телефон", e:"📱", ok:false},
+    {t:"Бо вона сама заснула", e:"😴", ok:false}
+  ],
+  reveal:"Слово з апострофом тут: <b>сім'я</b> — [с] [і] [м] [й] [а]."
+};
+
+const POEM3 = {
+  text:"Як виросту — збудую хату, на хаті колесо приб'ю, а там я поселю крилату лелечу клекітну сім'ю. Нехай розводиться, гніздиться по всіх деревах і хатах, нехай мені щоночі сниться, що я літаю, наче птах.",
+  author:"Дмитро Павличко",
+  q:"Про яку мрію розповідає автор вірша?",
+  opts:[
+    {t:"Збудувати хату й оселити на ній лелек", e:"🏠", ok:true},
+    {t:"Полетіти на космічному кораблі", e:"🚀", ok:false},
+    {t:"Стати найшвидшим бігуном", e:"🏃", ok:false}
+  ],
+  reveal:"Слова з апострофом тут: <b>приб'ю</b>, <b>сім'ю</b>."
+};
+
+/* ============================================================
+   СТАН
+   ============================================================ */
+const STAGES = ["theory","poem1","pairs_gallery","word_pairs","word_formation","fill_apostrophe","poem2","magic_circles","transfer_rule","proverbs","poem3","creative","final"];
+const TASKS = [
+  {icon:"❜", title:"Що таке апостроф"},
+  {icon:"📖", title:"Вірш «Грицю, Грицю...»"},
+  {icon:"🔡", title:"Один звук чи два?"},
+  {icon:"🎯", title:"Гра: знайди апостроф"},
+  {icon:"🧩", title:"Утвори слово"},
+  {icon:"✏️", title:"Доповни речення"},
+  {icon:"📗", title:"Вірш «Сім'я вечеря...»"},
+  {icon:"🌀", title:"Чарівні кола"},
+  {icon:"↩️", title:"Перенос слів"},
+  {icon:"📜", title:"Прислів'я"},
+  {icon:"🌙", title:"Вірш «Мрія»"},
+  {icon:"✍️", title:"Творче завдання"},
+  {icon:"🏁", title:"Підсумок"}
+];
+
+let stageIdx = 0;
+let score = 0;
+
+let pairsSeen = new Set();
+let wordPairRound = 0;
+let wordFormRound = 0;
+let fillRound = 0;
+let magicRound = 0;
+
+const stageEl = document.getElementById('stage');
+const stonesEl = document.getElementById('stones');
+
+function renderStones(){
+  let html = '';
+  TASKS.forEach((task,i)=>{
+    const isDone = stageIdx > i;
+    const isNow = stageIdx === i;
+    html += `<div class="stone-wrap">
+      <div class="stone ${isDone?'done':''} ${isNow?'now':''}" onclick="jumpTo(${i})" title="${task.title}">
+        ${isNow ? '<span class="owl-mark">🐶</span>' : ''}
+        ${isDone ? '✓' : task.icon}
+      </div>
+      ${i < TASKS.length-1 ? `<div class="stone-line ${isDone?'done':''}"></div>` : ''}
+    </div>`;
+  });
+  stonesEl.innerHTML = html;
+}
+
+function mascotSvg(){
+  return `<svg class="owl" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="15" cy="58" rx="13" ry="20" fill="#C98A4B"/>
+    <ellipse cx="85" cy="58" rx="13" ry="20" fill="#C98A4B"/>
+    <circle cx="50" cy="54" r="34" fill="#E8B074"/>
+    <ellipse cx="50" cy="67" rx="19" ry="15" fill="#F7E0C0"/>
+    <ellipse cx="38" cy="50" rx="6" ry="7" fill="#3A2E22"/>
+    <ellipse cx="62" cy="50" rx="6" ry="7" fill="#3A2E22"/>
+    <circle cx="36" cy="48" r="1.6" fill="#fff"/>
+    <circle cx="60" cy="48" r="1.6" fill="#fff"/>
+    <ellipse cx="50" cy="61" rx="6.5" ry="4.8" fill="#3A2E22"/>
+    <path d="M50 65 Q50 70 43 72" stroke="#3A2E22" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M50 65 Q50 70 57 72" stroke="#3A2E22" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M46 72 Q50 79 54 72" fill="#F5889B"/>
+  </svg>`;
+}
+
+function bubble(text){
+  return `<div class="mascot-row">${mascotSvg()}<div class="bubble">${text}</div></div>`;
+}
+
+function legendRow(){
+  return `<div class="legend-row">
+    <div class="legend-item"><span class="legend-ico">🔔</span>дзвінкий — голос і шум</div>
+    <div class="legend-item"><span class="legend-ico">🤫</span>глухий — тільки шум</div>
+  </div>`;
+}
+
+function addScore(n){
+  score += n;
+}
+
+/* ---------- free navigation ---------- */
+function jumpTo(i){
+  if(i<0) i=0;
+  if(i>=STAGES.length) i=STAGES.length-1;
+  stageIdx = i;
+  const st = STAGES[i];
+  if(st==='pairs_gallery') pairsSeen = new Set();
+  if(st==='word_pairs') wordPairRound = 0;
+  if(st==='word_formation') wordFormRound = 0;
+  if(st==='fill_apostrophe') fillRound = 0;
+  if(st==='magic_circles') magicRound = 0;
+  if(st==='proverbs') proverbIdx = 0;
+  closeMenu();
+  render();
+}
+
+function buildMenu(){
+  const list = document.getElementById('menuList');
+  list.innerHTML = '';
+  TASKS.forEach((task,i)=>{
+    const li = document.createElement('li');
+    li.className = i===stageIdx ? 'current' : '';
+    li.innerHTML = `<span class="num">${task.icon}</span><span>${i+1}. ${task.title}</span>`;
+    li.onclick = ()=> jumpTo(i);
+    list.appendChild(li);
+  });
+}
+function openMenu(){ buildMenu(); document.getElementById('menuOverlay').classList.add('open'); }
+function closeMenu(){ document.getElementById('menuOverlay').classList.remove('open'); }
+document.getElementById('menuBtn').onclick = openMenu;
+document.getElementById('menuCloseBtn').onclick = closeMenu;
+document.getElementById('menuOverlay').onclick = (e)=>{ if(e.target.id==='menuOverlay') closeMenu(); };
+document.getElementById('prevTaskBtn').onclick = ()=> jumpTo(stageIdx-1);
+document.getElementById('nextTaskBtn').onclick = ()=> jumpTo(stageIdx+1);
+
+/* ============================================================
+   1. ТЕОРІЯ: ЗВУКИ І БУКВИ
+   ============================================================ */
+function renderTheory(){
+  stageEl.innerHTML = `
+    ${bubble("Гав-гав! Я — песик Барбосик 🐶 Сьогодні дізнаємось, коли в українських словах ставиться апостроф.")}
+    <h2 class="stage-title">Вживання апострофа</h2>
+    <div class="card-box">
+      Букви перед апострофом позначають <b>тверді приголосні звуки</b>.<br><br>
+      Апостроф ставиться після букв <b>б, п, в, м, ф, р</b>, що позначають тверді приголосні звуки,
+      перед буквами <b>я, ю, є, ї</b>, які тоді позначають по <b>два звуки</b>: [йа], [йу], [йе], [йі].<br>
+      Наприклад: <b>б'ю</b>, <b>п'є</b>, <b>солов'ї</b>, <b>м'ята</b>, <b>міжгір'я</b>.
+    </div>
+    <p class="stage-sub">Дай відповідь на всі питання</p>
+    <div class="q-block">
+      <p class="q-text">Букви перед апострофом позначають...</p>
+      <div class="q-opts" id="opts1"></div>
+    </div>
+    <div class="q-block" style="margin-top:18px;">
+      <p class="q-text">Після яких букв може стояти апостроф?</p>
+      <div class="q-opts" id="opts2"></div>
+    </div>
+    <div class="q-block" style="margin-top:18px;">
+      <p class="q-text">${THEORY_QUIZ_3.q}</p>
+      <div class="q-opts" id="opts3"></div>
+    </div>
+    <div class="nav-row"><button class="btn" id="nextBtn" disabled>Далі: читаємо вірш →</button></div>
+  `;
+  let answered = 0;
+  function makeOpts(containerId, correctText, wrongText, correctFirst){
+    const row = document.getElementById(containerId);
+    const arr = correctFirst ? [{t:correctText,ok:true},{t:wrongText,ok:false}] : [{t:wrongText,ok:false},{t:correctText,ok:true}];
+    arr.forEach(o=>{
+      const b = document.createElement('button');
+      b.className = 'q-opt';
+      b.textContent = o.t;
+      b.onclick = ()=>{
+        row.querySelectorAll('.q-opt').forEach(x=>x.disabled=true);
+        if(o.ok){ b.classList.add('correct'); addScore(1); }
+        else{ b.classList.add('wrong'); row.querySelectorAll('.q-opt').forEach(x=>{ if(x.textContent===correctText) x.classList.add('correct'); }); }
+        answered++;
+        if(answered>=3) document.getElementById('nextBtn').disabled = false;
+      };
+      row.appendChild(b);
+    });
+  }
+  makeOpts('opts1','тверді приголосні звуки','м\u2019які приголосні звуки', true);
+  makeOpts('opts2','б, п, в, м, ф, р','д, т, н, л', true);
+  makeOpts('opts3', THEORY_QUIZ_3.correctText, THEORY_QUIZ_3.wrongText, true);
+  document.getElementById('nextBtn').onclick = ()=>{ stageIdx = 1; render(); };
+}
+
+/* ============================================================
+   2 / 9. ЧИТАННЯ ВІРША (спільна функція для poem1 і poem2)
+   ============================================================ */
+function renderPoem(poem, nextStageIdx){
+  const words = poem.text.split(' ');
+  stageEl.innerHTML = `
+    ${bubble("Прочитай виразно вірш і торкайся слів, коли читаєш уголос.")}
+    <h2 class="stage-title">Читаємо вірш</h2>
+    <div class="sentence-card">
+      <div class="words" id="wordsLine"></div>
+      <span class="author">${poem.author}</span>
+      <div class="read-hint">Торкайся кожного слова 🔊</div>
+    </div>
+    <div class="q-block">
+      <p class="q-text">${poem.q}</p>
+      <div class="q-opts" id="optsRow"></div>
+    </div>
+    <div class="fb-line" id="readFb"></div>
+    <button class="reveal-btn" id="revealBtn" style="display:none;">🔎 Показати більше</button>
+    <div class="reveal-box" id="revealBox">${poem.reveal}</div>
+    <div class="nav-row" style="display:none" id="nextWrap"><button class="btn teal" id="poemNextBtn">Далі →</button></div>
+  `;
+  const wordsLine = document.getElementById('wordsLine');
+  words.forEach(w=>{
+    const span = document.createElement('span');
+    span.textContent = w;
+    span.onclick = ()=> span.classList.toggle('tapped');
+    wordsLine.appendChild(span);
+  });
+
+  const optsRow = document.getElementById('optsRow');
+  const shuffled = [...poem.opts].sort(()=>Math.random()-0.5);
+  shuffled.forEach(o=>{
+    const b = document.createElement('button');
+    b.className = 'q-opt';
+    b.innerHTML = `<span class="e">${o.e}</span>${o.t}`;
+    b.onclick = ()=>{
+      optsRow.querySelectorAll('.q-opt').forEach(x=>x.disabled=true);
+      const fb = document.getElementById('readFb');
+      if(o.ok){
+        b.classList.add('correct'); addScore(1);
+        fb.textContent = "Так! Чудова уява 🎉";
+        fb.className = 'fb-line ok';
+      } else {
+        b.classList.add('wrong');
+        shuffled.forEach((op,i)=>{ if(op.ok) optsRow.children[i].classList.add('correct'); });
+        fb.textContent = "Гарна спроба — ось підказка вище.";
+        fb.className = 'fb-line bad';
+      }
+      document.getElementById('nextWrap').style.display = 'flex';
+      document.getElementById('revealBtn').style.display = 'block';
+    };
+    optsRow.appendChild(b);
+  });
+
+  document.getElementById('revealBtn').onclick = (e)=>{
+    document.getElementById('revealBox').classList.toggle('open');
+  };
+  document.getElementById('poemNextBtn').onclick = ()=>{ stageIdx = nextStageIdx; render(); };
+}
+
+/* ============================================================
+   3. ПАРИ ДЗВІНКИХ І ГЛУХИХ — ГАЛЕРЕЯ
+   ============================================================ */
+function renderPairsGallery(){
+  stageEl.innerHTML = `
+    ${bubble("Буква я, ю, є, ї то позначає один звук, то одразу два — усе залежить від апострофа. Перевернь кожну картку!")}
+    <h2 class="stage-title">Один звук чи два?</h2>
+    <p class="stage-sub">Торкнись картки, щоб перевернути</p>
+    <div class="letters-grid" id="lettersGrid"></div>
+    <div class="seen-counter" id="seenCounter">Відкрито 0 із ${APOSTROPHE_PAIRS.length}</div>
+    <div class="nav-row"><button class="btn" id="nextBtn" disabled>Далі: гра зі словами →</button></div>
+  `;
+  const grid = document.getElementById('lettersGrid');
+  APOSTROPHE_PAIRS.forEach((item,i)=>{
+    const card = document.createElement('button');
+    card.className = 'letter-card';
+    card.innerHTML = `
+      <span class="face front" style="font-size:19px; padding:0 6px; text-align:center; line-height:1.15;">${item.l}</span>
+      <span class="face back" style="font-size:10.5px;"><span class="emo">${item.emo}</span>${item.type}<br>${item.word}</span>
+      <span class="spark">⭐️</span>
+    `;
+    card.onclick = ()=>{
+      card.classList.toggle('flipped');
+      pairsSeen.add(i);
+      document.getElementById('seenCounter').textContent = `Відкрито ${pairsSeen.size} із ${APOSTROPHE_PAIRS.length}`;
+      if(pairsSeen.size === APOSTROPHE_PAIRS.length){ document.getElementById('nextBtn').disabled = false; }
+    };
+    grid.appendChild(card);
+  });
+  document.getElementById('nextBtn').onclick = ()=>{ stageIdx = 3; render(); };
+}
+
+/* ============================================================
+   4. ГРА: У ЯКОМУ СЛОВІ Є АПОСТРОФ
+   ============================================================ */
+function renderWordPairs(){
+  if(wordPairRound >= WORD_PAIR_ROUNDS.length){ stageIdx = 4; return render(); }
+  const r = WORD_PAIR_ROUNDS[wordPairRound];
+  const opts = [{t:r.w1,e:r.e1},{t:r.w2,e:r.e2}].sort(()=>Math.random()-0.5);
+  stageEl.innerHTML = `
+    ${bubble("У якому слові буква я, ю чи ї позначає ДВА звуки — тобто стоїть апостроф?")}
+    <div class="round-tag">Раунд ${wordPairRound+1} із ${WORD_PAIR_ROUNDS.length}</div>
+    <div class="pair-card">
+      <div class="item"><span class="emo">${r.e1}</span>${r.w1}</div>
+      <span class="vs">чи</span>
+      <div class="item"><span class="emo">${r.e2}</span>${r.w2}</div>
+    </div>
+    <div class="choices" id="choicesCol"></div>
+    <div class="fb-line" id="pairFb"></div>
+  `;
+  const col = document.getElementById('choicesCol');
+  opts.forEach(o=>{
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="emo" style="margin-right:8px;">${o.e}</span>${o.t}`;
+    b.onclick = ()=>{
+      col.querySelectorAll('.choice').forEach(c=>c.disabled=true);
+      const fb = document.getElementById('pairFb');
+      if(o.t === r.correct){
+        b.classList.add('correct'); addScore(1);
+        fb.textContent = "Так, тут апостроф! 🌟"; fb.className = 'fb-line ok';
+      } else {
+        b.classList.add('wrong');
+        col.querySelectorAll('.choice').forEach(c=>{ if(c.textContent.includes(r.correct)) c.classList.add('correct'); });
+        fb.textContent = "Ось слово з апострофом."; fb.className = 'fb-line bad';
+      }
+      setTimeout(()=>{ wordPairRound++; render(); }, 950);
+    };
+    col.appendChild(b);
+  });
+}
+
+/* ============================================================
+   5. ГРА: УТВОРИ СЛОВО З АПОСТРОФОМ
+   ============================================================ */
+function renderWordFormation(){
+  if(wordFormRound >= WORD_FORM_ROUNDS.length){ stageIdx = 5; return render(); }
+  const r = WORD_FORM_ROUNDS[wordFormRound];
+  const shuffled = [...r.opts].sort(()=>Math.random()-0.5);
+  stageEl.innerHTML = `
+    ${bubble("Утвори нове слово з апострофом від поданого!")}
+    <div class="round-tag">Раунд ${wordFormRound+1} із ${WORD_FORM_ROUNDS.length}</div>
+    <div class="prompt-word">${r.base}</div>
+    <div class="choices" id="choicesCol"></div>
+    <div class="fb-line" id="formFb"></div>
+  `;
+  const col = document.getElementById('choicesCol');
+  shuffled.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = opt;
+    b.onclick = ()=>{
+      col.querySelectorAll('.choice').forEach(c=>c.disabled=true);
+      const fb = document.getElementById('formFb');
+      if(opt === r.correct){
+        b.classList.add('correct'); addScore(1);
+        fb.textContent = "Точно! 🐶"; fb.className = 'fb-line ok';
+      } else {
+        b.classList.add('wrong');
+        col.querySelectorAll('.choice').forEach(c=>{ if(c.textContent===r.correct) c.classList.add('correct'); });
+        fb.textContent = "Ось правильне слово."; fb.className = 'fb-line bad';
+      }
+      setTimeout(()=>{ wordFormRound++; render(); }, 950);
+    };
+    col.appendChild(b);
+  });
+}
+
+/* ============================================================
+   6. ГРА: ДОПОВНИ РЕЧЕННЯ
+   ============================================================ */
+function renderFillApostrophe(){
+  if(fillRound >= FILL_ROUNDS.length){ stageIdx = 6; return render(); }
+  const r = FILL_ROUNDS[fillRound];
+  const shuffled = [...r.opts].sort(()=>Math.random()-0.5);
+  stageEl.innerHTML = `
+    ${bubble("Прочитай речення і обери слово, яким варто його доповнити.")}
+    <div class="round-tag">Раунд ${fillRound+1} із ${FILL_ROUNDS.length}</div>
+    <div class="sentence-card"><div class="words">${r.sentence}</div></div>
+    <div class="choices" id="choicesCol"></div>
+    <div class="fb-line" id="fillFb"></div>
+  `;
+  const col = document.getElementById('choicesCol');
+  shuffled.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = opt;
+    b.onclick = ()=>{
+      col.querySelectorAll('.choice').forEach(c=>c.disabled=true);
+      const fb = document.getElementById('fillFb');
+      if(opt === r.correct){
+        b.classList.add('correct'); addScore(1);
+        fb.textContent = "Правильно! 🦴"; fb.className = 'fb-line ok';
+      } else {
+        b.classList.add('wrong');
+        col.querySelectorAll('.choice').forEach(c=>{ if(c.textContent===r.correct) c.classList.add('correct'); });
+        fb.textContent = "Ось правильне слово."; fb.className = 'fb-line bad';
+      }
+      setTimeout(()=>{ fillRound++; render(); }, 950);
+    };
+    col.appendChild(b);
+  });
+}
+
+/* ============================================================
+   8. ГРА «ЧАРІВНІ КОЛА»
+   ============================================================ */
+function renderMagicCircles(){
+  if(magicRound >= MAGIC_ROUNDS.length){ stageIdx = 8; return render(); }
+  const r = MAGIC_ROUNDS[magicRound];
+  const shuffled = [...r.opts].sort(()=>Math.random()-0.5);
+  stageEl.innerHTML = `
+    ${bubble("У «Чарівних колах» складові поєднуються з центральним складом. Яке слово тут справжнє?")}
+    <div class="round-tag">Коло ${magicRound+1} із ${MAGIC_ROUNDS.length}</div>
+    <div class="circle-wrap">
+      <div class="circle-outer"></div>
+      <div class="circle-inner">${r.center}</div>
+    </div>
+    <div class="choices" id="choicesCol"></div>
+    <div class="fb-line" id="magicFb"></div>
+  `;
+  const col = document.getElementById('choicesCol');
+  shuffled.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = opt;
+    b.onclick = ()=>{
+      col.querySelectorAll('.choice').forEach(c=>c.disabled=true);
+      const fb = document.getElementById('magicFb');
+      if(opt === r.correct){
+        b.classList.add('correct'); addScore(1);
+        fb.textContent = "Так, це слово існує! ✨"; fb.className = 'fb-line ok';
+      } else {
+        b.classList.add('wrong');
+        col.querySelectorAll('.choice').forEach(c=>{ if(c.textContent===r.correct) c.classList.add('correct'); });
+        fb.textContent = "Ось справжнє слово."; fb.className = 'fb-line bad';
+      }
+      setTimeout(()=>{ magicRound++; render(); }, 950);
+    };
+    col.appendChild(b);
+  });
+}
+
+/* ============================================================
+   9. ПЕРЕНОС СЛІВ З АПОСТРОФОМ
+   ============================================================ */
+function renderTransferRule(){
+  stageEl.innerHTML = `
+    ${bubble("Ще одне важливе правило про апостроф — про перенос слів із рядка в рядок!")}
+    <div class="card-box">
+      Апостроф під час переносу слів не можна відокремлювати від попередньої літери:
+      <b>пір'-їна</b>, <b>Мар'-яна</b>, <b>солов'-їний</b>.
+    </div>
+    <h2 class="stage-title">Перенос слів</h2>
+    <div class="q-block">
+      <p class="q-text">${TRANSFER_QUIZ[0].q}</p>
+      <div class="q-opts" id="tOpts1"></div>
+    </div>
+    <div class="q-block" style="margin-top:18px;">
+      <p class="q-text">${TRANSFER_QUIZ[1].q}</p>
+      <div class="q-opts" id="tOpts2"></div>
+    </div>
+    <div class="nav-row"><button class="btn" id="nextBtn" disabled>Далі: прислів'я →</button></div>
+  `;
+  let answered = 0;
+  [TRANSFER_QUIZ[0], TRANSFER_QUIZ[1]].forEach((q,qi)=>{
+    const row = document.getElementById('tOpts'+(qi+1));
+    const shuffled = [...q.opts].sort(()=>Math.random()-0.5);
+    shuffled.forEach(o=>{
+      const b = document.createElement('button');
+      b.className = 'q-opt';
+      b.textContent = o.t;
+      b.onclick = ()=>{
+        row.querySelectorAll('.q-opt').forEach(x=>x.disabled=true);
+        if(o.ok){ b.classList.add('correct'); addScore(1); }
+        else{ b.classList.add('wrong'); shuffled.forEach((op,i)=>{ if(op.ok) row.children[i].classList.add('correct'); }); }
+        answered++;
+        if(answered>=2) document.getElementById('nextBtn').disabled = false;
+      };
+      row.appendChild(b);
+    });
+  });
+  document.getElementById('nextBtn').onclick = ()=>{ stageIdx = 9; render(); };
+}
+
+/* ============================================================
+   10. ПРИСЛІВ'Я
+   ============================================================ */
+let proverbIdx = 0;
+function renderProverbs(){
+  const p = PROVERB_ROUNDS[proverbIdx];
+  const shuffled = [...p.opts].sort(()=>Math.random()-0.5);
+  stageEl.innerHTML = `
+    ${bubble("Прочитай прислів'я і поясни, як ти розумієш його зміст.")}
+    <h2 class="stage-title">Прислів'я ${proverbIdx+1} із ${PROVERB_ROUNDS.length}</h2>
+    <div class="sentence-card"><div class="words">${p.text}</div></div>
+    <div class="q-block">
+      <p class="q-text">${p.q}</p>
+      <div class="q-opts" id="provOpts"></div>
+    </div>
+    <div class="fb-line" id="provFb"></div>
+    <div class="nav-row" style="display:none;" id="provNextWrap">
+      <button class="btn teal" id="provNextBtn">${proverbIdx < PROVERB_ROUNDS.length-1 ? "Наступне прислів'я →" : "Далі: вірш «Мрія» →"}</button>
+    </div>
+  `;
+  const row = document.getElementById('provOpts');
+  shuffled.forEach(o=>{
+    const b = document.createElement('button');
+    b.className = 'q-opt';
+    b.innerHTML = `<span class="e">${o.e}</span>${o.t}`;
+    b.onclick = ()=>{
+      row.querySelectorAll('.q-opt').forEach(x=>x.disabled=true);
+      const fb = document.getElementById('provFb');
+      if(o.ok){ b.classList.add('correct'); addScore(1); fb.textContent="Точно так! 🎉"; fb.className='fb-line ok'; }
+      else{ b.classList.add('wrong'); shuffled.forEach((op,i)=>{ if(op.ok) row.children[i].classList.add('correct'); }); fb.textContent="Гарна спроба, ось вірна відповідь."; fb.className='fb-line bad'; }
+      document.getElementById('provNextWrap').style.display = 'flex';
+    };
+    row.appendChild(b);
+  });
+  document.getElementById('provNextBtn').onclick = ()=>{
+    if(proverbIdx < PROVERB_ROUNDS.length-1){ proverbIdx++; renderProverbs(); }
+    else { stageIdx = 10; render(); }
+  };
+}
+
+/* ============================================================
+   12. ТВОРЧЕ ЗАВДАННЯ
+   ============================================================ */
+function renderCreative(){
+  stageEl.innerHTML = `
+    ${bubble("У малюнку зустрічаються Лук'янко, Мар'янка і Дем'янко — вони пригощають кролика духмяною травою. Склади про них коротеньку розповідь!")}
+    <h2 class="stage-title">Творче завдання</h2>
+    <textarea class="name-field" id="creativeInput" placeholder="Наприклад: Лук'янко приніс кролику духмяну траву."></textarea>
+    <div class="nav-row"><button class="btn" id="doneBtn">Готово! →</button></div>
+    <p class="fb-line ok" id="creativeFb"></p>
+  `;
+  document.getElementById('doneBtn').onclick = ()=>{
+    const fb = document.getElementById('creativeFb');
+    fb.textContent = "Чудова розповідь! Прочитай її сусіду по парті. 🙌";
+    addScore(1);
+    setTimeout(()=>{ stageIdx = 12; render(); }, 900);
+  };
+}
+
+/* ============================================================
+   13. ФІНАЛ
+   ============================================================ */
+function renderFinal(){
+  const maxScore = 3 + 1 + APOSTROPHE_PAIRS.length + WORD_PAIR_ROUNDS.length + WORD_FORM_ROUNDS.length + FILL_ROUNDS.length + 1 + MAGIC_ROUNDS.length + TRANSFER_QUIZ.length + PROVERB_ROUNDS.length + 1 + 1;
+  stageEl.innerHTML = `
+    <div class="final">
+      <div class="badge">🏆</div>
+      <h2>Чудово! 🎉</h2>
+      <p class="stage-sub" style="text-align:center;">Ти пройшов(-ла) увесь урок разом із песиком Барбосиком</p>
+      <div class="stars-row">${"⭐️".repeat(Math.min(score,12))}</div>
+      <p class="stage-sub" style="text-align:center;">Балів зібрано: ${score} із ${maxScore}</p>
+      <div class="homework-box">
+        <b>Домашнє завдання:</b><br>
+        1. Спиши слова: хлоп'я, голуб'я, сім'я, пір'я. Підкресли букву перед апострофом.<br>
+        2. Вигадай і запиши 2 власні слова з апострофом.<br>
+        3. Побудуй звукову модель слова «м'ята».
+      </div>
+      <div class="zoo-row">🐶🦴🐾💫🐦🌳🥕✨</div>
+      <div class="nav-row"><button class="btn" id="restartBtn">Пройти урок ще раз 🔁</button></div>
+    </div>
+  `;
+  document.getElementById('restartBtn').onclick = ()=>{
+    stageIdx = 0; score = 0;
+    pairsSeen = new Set(); wordPairRound = 0; wordFormRound = 0; fillRound = 0;
+    magicRound = 0; proverbIdx = 0;
+    render();
+  };
+  launchConfetti();
+}
+
+/* ============================================================
+   ДИСПЕТЧЕР
+   ============================================================ */
+function render(){
+  renderStones();
+  document.getElementById('prevTaskBtn').disabled = stageIdx===0;
+  document.getElementById('nextTaskBtn').disabled = stageIdx===STAGES.length-1;
+  const stage = STAGES[stageIdx];
+  if(stage === 'theory') renderTheory();
+  else if(stage === 'poem1') renderPoem(POEM1, 2);
+  else if(stage === 'pairs_gallery') renderPairsGallery();
+  else if(stage === 'word_pairs') renderWordPairs();
+  else if(stage === 'word_formation') renderWordFormation();
+  else if(stage === 'fill_apostrophe') renderFillApostrophe();
+  else if(stage === 'poem2') renderPoem(POEM2, 7);
+  else if(stage === 'magic_circles') renderMagicCircles();
+  else if(stage === 'transfer_rule') renderTransferRule();
+  else if(stage === 'proverbs') renderProverbs();
+  else if(stage === 'poem3') renderPoem(POEM3, 11);
+  else if(stage === 'creative') renderCreative();
+  else if(stage === 'final') renderFinal();
+}
+render();
+
+/* ============================================================
+   КОНФЕТІ ДЛЯ ФІНАЛУ
+   ============================================================ */
+function launchConfetti(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const layer = document.getElementById('confettiLayer');
+  const bits = ["⭐️","🎉","🐶","🦴","🐾","✨"];
+  for(let i=0;i<26;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.textContent = bits[Math.floor(Math.random()*bits.length)];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDuration = (2.4 + Math.random()*1.8) + 's';
+    el.style.animationDelay = (Math.random()*0.6) + 's';
+    el.style.fontSize = (16 + Math.random()*14) + 'px';
+    layer.appendChild(el);
+    setTimeout(()=> el.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>
